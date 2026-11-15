@@ -20,6 +20,41 @@ albedo_color = Color(0.7929253, 0.10300366, 0.1641615, 1)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_t2dwb"]
 
+[sub_resource type="GDScript" id="GDScript_b7y51"]
+script/source = "extends Label3D
+
+func _update_debug() -> void:
+	var player: Player = Player.instance()
+	var health = player.get_stat_float(Player.STAT_PARTNER_HEALTH, -1)
+	var health_max = player.get_stat_float(Player.STAT_PARTNER_HEALTH, -1, \"maximum\")
+	var health_dot = player.get_stat_float(Player.STAT_PARTNER_HEALTH_DOT, -1)
+	var comfort = player.get_stat_float(Player.STAT_PARTNER_COMFORT, -1)
+	var comfort_max = player.get_stat_float(Player.STAT_PARTNER_COMFORT, -1, \"maximum\")
+	var comfort_dot = player.get_stat_float(Player.STAT_PARTNER_COMFORT_DOT, -1)
+	
+	self.text = \"health: %3.0f / %3.0f (%2.2f)\\ncomfort: %3.0f / %3.0f (%2.2f)\" %\\
+			[health, health_max, -health_dot, comfort, comfort_max, -comfort_dot]
+
+func _on_change(_old, _new) -> void:
+	_update_debug()
+
+
+
+func _ready() -> void:
+	var bind_signals = func():
+		var player: Player = Player.instance()
+		player.get_statistic_changed_signal(Player.STAT_PARTNER_HEALTH).connect(_on_change)
+		player.get_statistic_changed_signal(Player.STAT_PARTNER_HEALTH_DOT).connect(_on_change)
+		player.get_statistic_changed_signal(Player.STAT_PARTNER_COMFORT).connect(_on_change)
+		player.get_statistic_changed_signal(Player.STAT_PARTNER_COMFORT_DOT).connect(_on_change)
+		_update_debug()
+	bind_signals.call_deferred()
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta: float) -> void:
+	pass
+"
+
 [node name="ProtagonistPartner" type="CharacterBody3D" unique_id=1294461781]
 script = ExtResource("1_0uvb6")
 
@@ -70,3 +105,9 @@ script = ExtResource("4_0uvb6")
 statistic_value = 12.0
 locked = false
 metadata/_custom_type_script = "uid://bi405jf26703l"
+
+[node name="HealthDebugText" type="Label3D" parent="." unique_id=1104682892]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.633845, 0)
+text = "health: 50/100
+comfort: 50/100"
+script = SubResource("GDScript_b7y51")
