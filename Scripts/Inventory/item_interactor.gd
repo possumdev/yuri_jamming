@@ -171,7 +171,7 @@ func _stat(stat_name: String, fallback: float) -> float:
 
 
 func _get_player_body() -> CollisionObject3D:
-	var node: Node = inventory if inventory != null else self
+	var node: Node = inventory as Node if inventory != null else self
 	while node != null:
 		if node is CollisionObject3D:
 			return node

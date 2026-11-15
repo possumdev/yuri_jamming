@@ -60,6 +60,13 @@ func _get_stat(statistic_name: String) -> Statistic:
 		return null
 	return statistics[statistic_name]
 
+func get_changed_signal(statistic_name: String) -> Signal:
+	var stat := _get_stat(statistic_name)
+	if stat == null:
+		# error pushed by _get_stat
+		return Signal()
+	return stat.statistic_changed
+
 func get_value_of(statistic_name: String, value_type: String = "current"):
 	var stat := _get_stat(statistic_name)
 	if stat == null:

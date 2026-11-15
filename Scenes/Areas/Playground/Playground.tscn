@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://b1to68tgil768" path="res://Scenes/HoverBike/hover_bike.tscn" id="2_20p6p"]
 [ext_resource type="PackedScene" uid="uid://c654wuvkkey64" path="res://Scenes/Items/Herbs/sweet_sage.tscn" id="2_ifawy"]
 [ext_resource type="PackedScene" uid="uid://dtmo37gt6tr8n" path="res://Scenes/Items/Herbs/yellow_murrow.tscn" id="3_3nfyh"]
+[ext_resource type="PackedScene" uid="uid://bank8ci6k6tp6" path="res://Scenes/ProtagonistPartner/ProtagonistPartner.tscn" id="7_b7y51"]
 [ext_resource type="PackedScene" uid="uid://dos85sg0uguby" path="res://Scenes/Levels/Desert/desert.tscn" id="8_b7y51"]
 [ext_resource type="PackedScene" path="res://Scenes/Items/berries.tscn" id="23_berries"]
 
@@ -55,6 +56,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0920634, 3.4132247, 1.18581
 
 [node name="HoverBike" parent="." unique_id=222466818 instance=ExtResource("2_20p6p")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5409789, 2.7339582)
+
+[node name="ProtagonistPartner" parent="." unique_id=1294461781 instance=ExtResource("7_b7y51")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.2861004, 1.1995139, -3.0422)
 
 [node name="Desert" parent="." unique_id=386311619 instance=ExtResource("8_b7y51")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10.260713, 0)
