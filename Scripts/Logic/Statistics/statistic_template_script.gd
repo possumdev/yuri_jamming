@@ -15,6 +15,7 @@ extends Node
 class_name Statistic
 
 # Emitted by subclass setters only when the value actually changes.
+@warning_ignore("unused_signal")
 signal statistic_changed(old_value, new_value)
 
 @export_category("statistic properties")

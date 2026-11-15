@@ -11,9 +11,15 @@
 # State: StateEngine has two sub-engines, NormalStateEngine -> Idle/Walking/Sprinting
 # and InAirStateEngine -> Jumped/Falling/Landed The is_in_air setter switches between them
 # Head motion is owned entirely by HeadBob states only call jump()/land() on it
-# All tuning lives in StatisticList; _stat() provides fallbacks
+# All tuning lives in StatisticList; get_stat_float() provides fallbacks
 
 extends CharacterBody3D
+class_name Player
+
+const STAT_PARTNER_HEALTH: StringName = &"partnerhealth"
+const STAT_PARTNER_HEALTH_DOT: StringName = &"partnerhealthdot"
+const STAT_PARTNER_COMFORT: StringName = &"partnercomfort"
+const STAT_PARTNER_COMFORT_DOT: StringName = &"partnercomfortdot"
 
 @onready var statistic_list: StatisticList = $StatisticList
 @onready var player_main_state_engine: StateEngine = $StateEngine
@@ -22,10 +28,16 @@ extends CharacterBody3D
 @onready var camera: Camera3D = $Neck/Head/Camera3D
 @onready var head_bob: HeadBob = $HeadBob
 
+static var _instance: Player
+static func instance() -> Player:
+	assert(_instance != null, "Instance accessed before ready")
+	# if this assert fails, access player after _ready(): call_deferred()
+	return _instance
+
 #kept as a property because the Riding state reads it too
 var mouse_sensitivity: float:
 	get:
-		return _stat("mousesensitivity", 0.003)
+		return get_stat_float("mousesensitivity", 0.003)
 
 #setter drives the top-level state engine, jumpsTaken is reset on landing
 var is_in_air: bool = false:
@@ -50,8 +62,14 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _ready() -> void:
+	if _instance != null:
+		push_warning("second Player node instiantiated")
+	_instance = self
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
+
+func _process(delta: float) -> void:
+	_handle_partner_stats(delta)
 
 func _physics_process(delta: float) -> void:
 	if vehicle != null:
@@ -74,18 +92,18 @@ func _physics_process(delta: float) -> void:
 
 	#gravity
 	if not is_on_floor():
-		statistic_list.change_value_of("movementdirection", Vector3(0, -_stat("gravity", 6.0) * delta, 0))
+		statistic_list.change_value_of("movementdirection", Vector3(0, -get_stat_float("gravity", 6.0) * delta, 0))
 		if is_in_air == false:
 			is_in_air = true
 
 	#head pitch clamp, in degrees from the MaxLookAngle statistic
-	var max_look := deg_to_rad(_stat("maxlookangle", 89.0))
+	var max_look := deg_to_rad(get_stat_float("maxlookangle", 89.0))
 	camera.rotation.x = clamp(camera.rotation.x, -max_look, max_look)
 
 	# Sprint is decided by the Sprinting state via the IsSprinting statistic
 	var speed: float = statistic_list.get_value_of("movementspeed")
 	if is_sprinting():
-		speed *= _stat("sprintmultiplier", 1.0)
+		speed *= get_stat_float("sprintmultiplier", 1.0)
 
 	var movement: Vector3 = statistic_list.get_value_of("movementdirection")
 	#actually inputing the velocities to player
@@ -109,9 +127,15 @@ func is_riding() -> bool:
 func is_sprinting() -> bool:
 	return statistic_list.statistics.has("issprinting") and statistic_list.get_value_of("issprinting")
 
+func _handle_partner_stats(delta: float) -> void:
+	statistic_list.change_value_of(STAT_PARTNER_HEALTH, -1 * statistic_list.get_value_of(STAT_PARTNER_HEALTH_DOT) * delta)
+	statistic_list.change_value_of(STAT_PARTNER_COMFORT, -1 * statistic_list.get_value_of(STAT_PARTNER_COMFORT_DOT) * delta)
+
+func get_statistic_changed_signal(stat_name: StringName) -> Signal:
+	return statistic_list.get_changed_signal(stat_name)
 
 # Typed statistic read with a fallback for statistics
-func _stat(stat_name: String, fallback: float) -> float:
+func get_stat_float(stat_name: StringName, fallback: float, value_type: String = "current") -> float:
 	if statistic_list != null and statistic_list.statistics.has(stat_name):
-		return float(statistic_list.get_value_of(stat_name))
+		return float(statistic_list.get_value_of(stat_name, value_type))
 	return fallback

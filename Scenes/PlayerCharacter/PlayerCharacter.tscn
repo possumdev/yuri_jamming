@@ -17,7 +17,7 @@
 [ext_resource type="Script" uid="uid://m8clerky6nmt" path="res://Scripts/Logic/Statistics/statistic_bool.gd" id="15_bool"]
 [ext_resource type="Script" uid="uid://d34o4rkrmfrib" path="res://Scripts/PlayerCharacter/States/sprinting.gd" id="16_sprint"]
 [ext_resource type="PackedScene" path="res://Scenes/Inventory/hand_rig.tscn" id="17_handrig"]
-[ext_resource type="Script" path="res://Scripts/PlayerCharacter/States/riding.gd" id="18_riding"]
+[ext_resource type="Script" uid="uid://bjvxip7n0oerq" path="res://Scripts/PlayerCharacter/States/riding.gd" id="18_riding"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_crda1"]
 
@@ -164,6 +164,36 @@ statistic_value = 0.25
 locked = false
 metadata/_custom_type_script = "uid://bi405jf26703l"
 
+[node name="PartnerHealth" type="Node" parent="StatisticList" unique_id=76750795]
+script = ExtResource("4_eb1wa")
+statistic_value = 100.0
+check_limits = true
+minimum_statistic_value = 0.0
+maximum_statistic_value = 100.0
+locked = false
+metadata/_custom_type_script = "uid://bi405jf26703l"
+
+[node name="PartnerHealthDot" type="Node" parent="StatisticList" unique_id=437300665]
+script = ExtResource("4_eb1wa")
+statistic_value = 1.0
+locked = false
+metadata/_custom_type_script = "uid://bi405jf26703l"
+
+[node name="PartnerComfort" type="Node" parent="StatisticList" unique_id=505387922]
+script = ExtResource("4_eb1wa")
+statistic_value = 50.0
+check_limits = true
+minimum_statistic_value = 0.0
+maximum_statistic_value = 100.0
+locked = false
+metadata/_custom_type_script = "uid://bi405jf26703l"
+
+[node name="PartnerComfortDot" type="Node" parent="StatisticList" unique_id=88208519]
+script = ExtResource("4_eb1wa")
+statistic_value = 0.1
+locked = false
+metadata/_custom_type_script = "uid://bi405jf26703l"
+
 [node name="HeadBob" type="Node" parent="." unique_id=1663609387 node_paths=PackedStringArray("player", "head")]
 script = ExtResource("14_headbob")
 player = NodePath("..")
@@ -185,7 +215,7 @@ script = ExtResource("6_akf18")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.7926263)
 gizmo_extents = 1.0
 
-[node name="HandRig" parent="Neck/Head/Camera3D" instance=ExtResource("17_handrig")]
+[node name="HandRig" parent="Neck/Head/Camera3D" unique_id=1339408921 instance=ExtResource("17_handrig")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2116171323]
 shape = SubResource("CapsuleShape3D_crda1")
@@ -225,7 +255,7 @@ script = ExtResource("10_ea7jj")
 script = ExtResource("12_0hgau")
 metadata/_custom_type_script = "uid://corrh6unt5pe0"
 
-[node name="Riding" type="Node" parent="StateEngine" node_paths=PackedStringArray("disable_while_riding")]
+[node name="Riding" type="Node" parent="StateEngine" unique_id=150022871 node_paths=PackedStringArray("disable_while_riding")]
 script = ExtResource("18_riding")
 disable_while_riding = [NodePath("../../PlayerInventory"), NodePath("../../Neck/Head/Camera3D/GrabRangeRayCast3D")]
 
