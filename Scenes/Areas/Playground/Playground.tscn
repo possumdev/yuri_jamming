@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c654wuvkkey64" path="res://Scenes/Items/Herbs/sweet_sage.tscn" id="2_ifawy"]
 [ext_resource type="PackedScene" uid="uid://dtmo37gt6tr8n" path="res://Scenes/Items/Herbs/yellow_murrow.tscn" id="3_3nfyh"]
 [ext_resource type="PackedScene" uid="uid://dos85sg0uguby" path="res://Scenes/Levels/Desert/desert.tscn" id="8_b7y51"]
+[ext_resource type="PackedScene" uid="uid://dafxpj0c1t616" path="res://Scenes/UI/PauseMenu/pause_menu.tscn" id="8_m1wv1"]
 [ext_resource type="PackedScene" uid="uid://dihtn61o4n18f" path="res://Scenes/Items/berries.tscn" id="23_berries"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_crda1"]
@@ -58,3 +59,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5409789, 2.7339582)
 
 [node name="Desert" parent="." unique_id=386311619 instance=ExtResource("8_b7y51")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10.260713, 0)
+
+[node name="Node" type="Node" parent="." unique_id=853194237]
+
+[node name="PauseMenu" parent="Node" unique_id=624797746 instance=ExtResource("8_m1wv1")]
