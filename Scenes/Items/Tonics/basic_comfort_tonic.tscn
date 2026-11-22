@@ -35,7 +35,7 @@ script = ExtResource("1_hkdyy")
 display_name = "Basic Comfort Tonic"
 description = "A tonic concocted from ingredients with healing and comforting properties. Restores a medium amount of comfort."
 use_effects = Dictionary[String, float]({
-"comfort": 15.0
+"partnercomfort": 25.0
 })
 
 [node name="CraftingRecipe" type="Node" parent="InventoryItem" unique_id=1858181806]

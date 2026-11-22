@@ -165,6 +165,36 @@ statistic_value = 0.25
 locked = false
 metadata/_custom_type_script = "uid://bi405jf26703l"
 
+[node name="PartnerHealth" type="Node" parent="StatisticList" unique_id=76750795]
+script = ExtResource("4_eb1wa")
+statistic_value = 100.0
+check_limits = true
+minimum_statistic_value = 0.0
+maximum_statistic_value = 100.0
+locked = false
+metadata/_custom_type_script = "uid://bi405jf26703l"
+
+[node name="PartnerHealthDot" type="Node" parent="StatisticList" unique_id=437300665]
+script = ExtResource("4_eb1wa")
+statistic_value = 1.0
+locked = false
+metadata/_custom_type_script = "uid://bi405jf26703l"
+
+[node name="PartnerComfort" type="Node" parent="StatisticList" unique_id=505387922]
+script = ExtResource("4_eb1wa")
+statistic_value = 50.0
+check_limits = true
+minimum_statistic_value = 0.0
+maximum_statistic_value = 100.0
+locked = false
+metadata/_custom_type_script = "uid://bi405jf26703l"
+
+[node name="PartnerComfortDot" type="Node" parent="StatisticList" unique_id=88208519]
+script = ExtResource("4_eb1wa")
+statistic_value = 0.1
+locked = false
+metadata/_custom_type_script = "uid://bi405jf26703l"
+
 [node name="HeadBob" type="Node" parent="." unique_id=1663609387 node_paths=PackedStringArray("player", "head")]
 script = ExtResource("14_headbob")
 player = NodePath("..")
